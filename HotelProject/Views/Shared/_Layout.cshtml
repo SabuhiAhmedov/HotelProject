@@ -1,0 +1,335 @@
+﻿
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="~/lib/jquery-ui/jquery-ui.min.css" rel="stylesheet" />
+    <script src="~/lib/jquery/jquery.min.js"></script>
+    <script src="~/lib/jquery-ui/jquery-ui.min.js"></script>
+
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Hotel</title>
+
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="~/assets/plugins/fontawesome-free/css/all.min.css">
+    <!-- IonIcons -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="~/assets/css/adminlte.min.css">
+</head>
+<!--
+`body` tag options:
+
+  Apply one or more of the following classes to to the body tag
+  to get the desired effect
+
+  * sidebar-collapse
+  * sidebar-mini
+-->
+<body class="hold-transition sidebar-mini">
+    <div class="wrapper">
+        <!-- Navbar -->
+        <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+            <!-- Left navbar links -->
+            <!-- Right navbar links -->
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link" data-toggle="dropdown" href="#">
+                        <i class="far fa-bell"></i>
+                        <span class="notification-count-sum badge badge-danger navbar-badge "></span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                        <span class="  dropdown-item dropdown-header"> Bildirişlər</span>
+                        <div class="dropdown-divider"></div>
+                        <a asp-action="Index" asp-controller="Notfications" class="dropdown-item">
+
+                            <i class="fas fa-phone mx-2  ">  </i>
+                            <i class=" notification-count">  </i>  Rezervasiya bildirişi
+                        </a>
+                        <a asp-action="GuestsIndex" asp-controller="Notfications" class="dropdown-item">
+
+                            <i class="fas fa-smile-beam mx-2  ">  </i>
+                            <i class=" notification-count-guests">  </i>  Qonaq bildirişi
+                        </a>
+
+                    </div>
+                </li>
+                <!-- Navbar Search -->
+                @if (!User.Identity.IsAuthenticated)
+                {
+                    <li class="nav-item ">
+                        <a class="nav-link " asp-controller="Account" asp-action="Login">Daxil Ol</a>
+                    </li>
+
+                    <li class="nav-item ">
+                        <a class="nav-link " asp-controller="Account" asp-action="Register">Qeydiyyatdan Kec</a>
+                    </li>
+                }
+                else
+                {
+                    <li class="nav-item ">
+                        <a class="nav-link ">@User.Identity.Name</a>
+                    </li>
+                    <li class="nav-item ">
+                        <a class="nav-link " asp-controller="Account" asp-action="Logout">Çıxış</a>
+                    </li>
+                }
+
+                <li class="nav-item">
+                    <a class="nav-link" data-widget="navbar-search" href="#" role="button">
+                        <i class="fas fa-search"></i>
+                    </a>
+                    <div class="navbar-search-block">
+                        <form class="form-inline">
+                            <div class="input-group input-group-sm">
+                                <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
+                                <div class="input-group-append">
+                                    <button class="btn btn-navbar" type="submit">
+                                        <i class="fas fa-search"></i>
+                                    </button>
+                                    <button class="btn btn-navbar" type="button" data-widget="navbar-search">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </li>
+
+
+            </ul>
+        </nav>
+        <!-- /.navbar -->
+        <!-- Main Sidebar Container -->
+        <aside class="main-sidebar sidebar-dark-primary elevation-4">
+            <!-- Brand Logo -->
+            <a asp-controller="Home" aspp-action="Index" class="brand-link">
+                <img src="~/assets/img/s1.jpg" alt="AdminLTE Logo" class="brand-image img-circle elevation-5" style="opacity: .9">
+                <span class="brand-text font-weight-light">Sebuhi</span>
+            </a>
+
+            <!-- Sidebar -->
+            <div class="sidebar">
+                <!-- Sidebar user panel (optional) -->
+                <!-- SidebarSearch Form -->
+                <!-- Sidebar Menu -->
+                <nav class="mt-2">
+                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                        <!-- Add icons to the links using the .nav-icon class
+                    with font-awesome or any other icon font library -->
+                        <li class="nav-item menu-open my-1">
+                            <a asp-controller="Home" asp-action="Index" class="nav-link active">
+                                <i class="nav-icon fas fa-home"></i>
+                                <p>
+                                    Ana Səhifə
+                                </p>
+                            </a>
+
+                        </li>
+
+                        <li class="nav-item menu-open my-1">
+                            <a asp-controller="Staffs" asp-action="Index" class="nav-link active">
+                                <i class="nav-icon fas fa-people-carry"></i>
+                                <p>
+                                    İşçilər
+                                </p>
+                            </a>
+
+                        </li>
+
+                        <li class="nav-item menu-open my-1">
+                            <a asp-controller="Department" asp-action="Index" class="nav-link active">
+                                <i class="nav-icon fas  fa-hotel"></i>
+                                <p>
+                                    Departamentlər
+                                </p>
+                            </a>
+
+                        </li>
+
+                        <li class="nav-item menu-open my-1">
+                            <a asp-controller="Positions" asp-action="Index" class="nav-link active">
+                                <i class="nav-icon fas  fa-star"></i>
+                                <p>
+                                    Vəzifələr
+                                </p>
+                            </a>
+
+                        </li>
+
+                        <li class="nav-item menu-open my-1">
+                            <a asp-controller="Rooms" asp-action="Index" class="nav-link active">
+                                <i class="nav-icon fas fa-door-open"></i>
+                                <p>
+                                    Otaqlar
+                                </p>
+                            </a>
+
+                        </li>
+                        <li class="nav-item menu-open my-1">
+                            <a asp-controller="Reservation" asp-action="Index" class="nav-link active">
+                                <i class="nav-icon fas fa-phone"></i>
+                                <p>
+                                    Rezervlər
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item menu-open my-1">
+                            <a asp-controller="Guests" asp-action="Index" class="nav-link active">
+                                <i class="nav-icon fas fa-smile-beam"></i>
+                                <p>
+                                    Qonaqlar
+                                </p>
+                            </a>
+
+                        </li>
+
+                        <li class="nav-item menu-open my-1">
+                            <a asp-controller="History" asp-action="Index" class="nav-link active">
+                                <i class="nav-icon fas fa-history"></i>
+                                <p>
+                                    Tarix
+                                </p>
+                            </a>
+
+                        </li>
+
+                        <li class="nav-item menu-open my-1">
+                            <a asp-controller="Payments" asp-action="Index" class="nav-link active">
+                                <i class="nav-icon fas fa-file-invoice-dollar"></i>
+                                <p>
+                                    Ödənişlər
+                                </p>
+                            </a>
+
+                        </li>
+
+                        <li class="nav-item menu-open my-1">
+                            <a asp-controller="Salary" asp-action="Index" class="nav-link active">
+                                <i class="nav-icon fas fa-ruble-sign"></i>
+                                <p>
+                                    Maaşlar
+                                </p>
+                            </a>
+
+                        </li>
+
+                        <li class="nav-item menu-open my-1">
+                            <a asp-controller="Income" asp-action="Index" class="nav-link active">
+                                <i class="nav-icon fas fa-dollar-sign"></i>
+                                <p>
+                                    Gəlirlər
+                                </p>
+                            </a>
+
+                        </li>
+                        <li class="nav-item menu-open my-1">
+                            <a asp-controller="Expensesies" asp-action="Index" class="nav-link active">
+                                <i class="nav-icon fas fa-comment-dollar"></i>
+                                <p>
+                                    Xərclər
+                                </p>
+                            </a>
+
+                        </li>
+
+
+                      
+
+                    </ul>
+                </nav>
+                <!-- /.sidebar-menu -->
+            </div>
+
+            <!-- /.sidebar -->
+        </aside>
+
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+
+
+            @RenderBody()
+        </div>
+
+        <!-- /.content-wrapper -->
+        <!-- Control Sidebar -->
+        <aside class="control-sidebar control-sidebar-dark">
+            <!-- Control sidebar content goes here -->
+        </aside>
+        <!-- /.control-sidebar -->
+        <!-- Main Footer -->
+       
+                    <div  style="background-color:lightgray" class=" text-center d-flex justify-content-center ">
+                        <p><strong>©2023</strong> Created By Sabuhi Ahmedov </p>
+                    </div>
+                
+    </div>
+    <!-- ./wrapper -->
+    <!-- REQUIRED SCRIPTS -->
+    <!-- jQuery -->
+    <script src="~/assets/plugins/jquery/jquery.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="~/assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- AdminLTE -->
+    <script src="~/assets/js/adminlte.js"></script>
+
+    <!-- OPTIONAL SCRIPTS -->
+    <script src="~/assets/plugins/chart.js/Chart.min.js"></script>
+    <!-- AdminLTE for demo purposes -->
+    <script src="~/assets/js/demo.js"></script>
+    <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+    <script src="~/assets/js/pages/dashboard3.js"></script>
+
+    <script>
+        $(function () {
+            $.ajax({
+                url: "/Notfications/SendDataLayout",
+                type: "GET",
+                success: function (data) {
+
+                    $(".notification-count").text(data);
+                },
+                error: function () {
+                    console.log("Xeta!");
+                }
+            });
+        });
+    </script>
+    <script>
+        $(function () {
+            $.ajax({
+                url: "/Notfications/SendDataLayoutGuests",
+                type: "GET",
+                success: function (data) {
+
+                    $(".notification-count-guests").text(data);
+                },
+                error: function () {
+                    console.log("Xeta!");
+                }
+            });
+        });
+    </script>
+    <script>
+        $(function () {
+            $.ajax({
+                url: "/Notfications/SendDataLayoutSumResGuest",
+                type: "GET",
+                success: function (data) {
+                    if (data > 0) { $(".notification-count-sum").text(data) };
+
+                },
+                error: function () {
+                    console.log("Xeta!");
+                }
+            });
+        });
+    </script>
+    
+    @RenderSection("Scripts", false)
+</body>
+
+</html>

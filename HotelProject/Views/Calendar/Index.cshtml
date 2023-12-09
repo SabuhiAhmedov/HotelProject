@@ -1,0 +1,78 @@
+﻿@model List<Reservation>
+
+<div style="float:right; width: 170px; height: 43px; background-color:skyblue; border: 1px solid black; padding: 10px; ">
+    <h6>Otağın rezerv sayı: @Model.Count</h6>
+</div>
+
+<div>
+
+    @foreach (Reservation item in Model)
+    {
+        <div>
+            <h3>
+                <strong>
+                    @{ DateTime entryDate = item.EntryDate;
+                        DateTime departDate = item.DepartDate;
+                        string formatentry = entryDate.ToString("dd MMMM yyyy");
+                        string formatdepart = departDate.ToString("dd MMMM yyyy");
+                    }
+                    Bu otaq @formatentry tarixindən @formatdepart tarixinə qədər Rezerv edilib.              <br />
+
+
+                </strong>
+
+
+            </h3>
+        </div>
+    }
+    @{
+        Guests guests = ViewBag.Guests;
+        if (guests != null)
+        {
+            if (guests.Rooms.IsBusy)
+            {
+                DateTime entryDate = guests.EntryDate;
+                DateTime departDate = guests.DepartDate;
+                string formatentry = entryDate.ToString("dd MMMM yyyy");
+                string formatdepart = departDate.ToString("dd MMMM yyyy");
+                <h3>
+                    <strong>
+                        Otaq hal hazırda doludur.&nbsp; Qonağın qalma müddəti @formatdepart tarixində bitir.
+                    </strong>
+                </h3>
+            }
+            else
+            {
+                <h3>
+                    <strong>
+                        Otaq hal hazırda boşdur
+                    </strong>
+                </h3>
+            }
+
+        }
+        else
+        {
+
+            <h3>
+                <strong>
+                    Otaq hal hazırda boşdur
+                </strong>
+            </h3>
+        }
+
+    }
+
+</div>
+<style>
+    h3 {
+        font-size: 1.2em;
+        font-weight: bold;
+        margin: 0 0 10px 0;
+    }
+
+    strong {
+        color: #333;
+    }
+</style>
+<a asp-action="Index" asp-controller="Rooms" class="btn btn-success rounded-pill">Geri</a>

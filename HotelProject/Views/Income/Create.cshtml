@@ -1,0 +1,70 @@
+﻿
+@model Income
+<div class="row">
+    <div class="col-md-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <div>
+                    <h3> <strong>Gəliri daxil et </strong></h3>
+                </div>
+
+                <form class="forms-sample" method="post" enctype="multipart/form-data">
+
+
+                    <div class="form-group">
+                        <label asp-for="Source">Gəlirin mənbəyi</label>
+                        <input asp-for="Source" class="form-control">
+                        <span asp-validation-for="Source" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Amount">Məbləğ/Manat</label>
+                        <input asp-for="Amount" class="form-control">
+                        <span asp-validation-for="Amount" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Time"> Tarix</label>
+                        <input asp-for="Time" class="form-control">
+                        <span asp-validation-for="Time" class="text-danger"></span>
+                    </div>
+
+                    @if (User.IsInRole("Admin"))
+                    {
+                        string role = "Admin";
+                        <div class="form-group">
+                            <label asp-for="Executor"> İcraçı</label>
+                            <input asp-for="Executor" class="form-control" value="@User.Identity.Name , @role" readonly>
+                            <span asp-validation-for="Executor" class="text-danger"></span>
+                        </div>
+
+                    }
+                    else if (User.IsInRole("Member"))
+                    {
+                        string role = "Member";
+                        <div class="form-group">
+                            <label asp-for="Executor"> İcraçı</label>
+                            <input asp-for="Executor" class="form-control" value="@User.Identity.Name , @role" readonly>
+                            <span asp-validation-for="Executor" class="text-danger"></span>
+                        </div>
+
+                    }
+                   
+
+
+
+
+
+                    <button type="submit" class="btn btn-primary mr-2 rounded-pill">Təstiqlə</button>
+                    <a asp-action="Index" class="btn btn-light rounded-pill">Geri</a>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+    
+
+}
+

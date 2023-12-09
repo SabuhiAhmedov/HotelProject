@@ -1,0 +1,144 @@
+﻿@model List<Reservation>
+<section id="section-1" class=" content">
+    <div class="container-fluid">
+        <div class="row">
+
+
+            <div class="col-md-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between mx-3">
+                            <h3 id="h3-data" class="card-title font-weight-bold  ">Silinmiş rezervasiyalar</h3>
+
+                            <a id="button" onclick="toggleTable()" class="btn btn-secondary rounded-pill  mx-3 ">Qonaqlar</a>
+                            <a id="button-2" onclick="clickTable()" class="btn btn-secondary rounded-pill  mx-3 "> Rezervlər</a>
+
+
+
+
+                        </div>
+
+
+
+
+
+                        <div class="card-body">
+
+                            <table id="table-1" class="table table-bordered  my-0">
+                                <thead>
+                                    <tr>
+
+
+                                        <th>Tam Ad</th>
+
+                                        <th>Otaq </th>
+                                        <th>Otaq №</th>
+                                        <th>Email</th>
+                                        <th>Qonaq sayı</th>
+                                        <th>Rezerv Vaxtı </th>
+                                        <th>Bitiş Vaxtı </th>
+                                        <th>İcraçı və rolu </th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (Reservation item in Model)
+                                    {
+                                        <tr>
+
+
+                                            <td>@item.FullName</td>
+
+                                            <td>@item.Rooms.RoomType.Type</td>
+                                            <td>@item.Rooms.RoomNumber</td>
+
+                                            <td>@item.Email</td>
+                                            <td>@item.Quantity</td>
+                                            <td>@item.EntryDate</td>
+                                            <td>@item.DepartDate</td>
+                                            <td>@item.Executor</td>
+
+
+
+                                        </tr>
+                                    }
+
+                                </tbody>
+                            </table>
+
+
+
+                            <table  id="table-2"class="table table-bordered  my-0">
+                                <thead>
+                                    <tr>
+                                        <th>Tam Ad</th>
+                                        <th>Vəsiqə №</th>
+                                        <th>Otaq </th>
+                                        <th>Otaq №</th>
+                                        <th>Email</th>
+                                        <th>Qonaq sayı</th>
+                                        <th>Rezerv Vaxtı </th>
+                                        <th>Bitiş Vaxtı </th>
+                                        <th>İcraçı və rolu </th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (Guests item in ViewBag.Guests)
+                                    {
+                                        <tr>
+                                            <td>@item.FullName</td>
+                                            <td>@item.PasspNumb</td>
+                                            <td>@item.Rooms.RoomType.Type</td>
+                                            <td>@item.Rooms.RoomNumber</td>
+                                            <td>@item.Email</td>
+                                            <td>@item.Quantity</td>
+                                            <td>@item.EntryDate</td>
+                                            <td>@item.DepartDate</td>
+                                            <td>@item.Executor</td>
+                                        </tr>
+                                    }
+
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    document.getElementById("table-2").style.display = "none";
+    document.getElementById("button-2").style.display="none"
+    function toggleTable() {
+        var table1 = document.getElementById("table-1")
+        var table2 = document.getElementById("table-2")
+        var button = document.getElementById("button")
+        var button2 = document.getElementById("button-2")
+        var data = document.getElementById("h3-data")
+        table1.style.display = "none"
+        table2.style.display = "table"
+        button.style.display = "none"
+        button2.style.display = "table"
+        data.innerHTML = "Silinmiş Qonaqlar"
+    }
+        function clickTable() {
+            var table1 = document.getElementById("table-1")
+            var table2 = document.getElementById("table-2")
+            var button = document.getElementById("button")
+            var button2 = document.getElementById("button-2")
+            var data = document.getElementById("h3-data")
+            table1.style.display = "table"
+            table2.style.display = "none"
+            button.style.display = "table"
+            button2.style.display = "none"
+            data.innerHTML = "Silinmiş rezervasiyalar"
+        }
+
+    
+</script>
+

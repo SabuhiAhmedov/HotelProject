@@ -1,0 +1,267 @@
+﻿@model CashRegister
+<!DOCTYPE html>
+<html>
+<head>
+
+    <style>
+        .kutu {
+            width: 230px;
+            height: 120px;
+            background-color: red;
+            margin: 10px;
+            display: inline-block;
+            position: relative;
+        }
+
+        .kutu-1 {
+            width: 230px;
+            height: 120px;
+            background-color: olivedrab;
+            margin: 10px;
+            display: inline-block;
+            position: relative;
+        }
+
+        .kutu-2 {
+            width: 230px;
+            height: 120px;
+            background-color: forestgreen;
+            margin: 10px;
+            display: inline-block;
+            position: relative;
+        }
+
+        .kutu-3 {
+            width: 230px;
+            height: 120px;
+            background-color: black;
+            margin: 10px;
+            display: inline-block;
+            position: relative;
+        }
+
+            .kutu-3::before {
+                content: "🔒";
+                position: absolute;
+                top: 0;
+                left: 0;
+                font-size: 24px;
+                color: white;
+            }
+
+        .kutu-4 {
+            width: 230px;
+            height: 120px;
+            background-color: dodgerblue;
+            margin: 10px;
+            display: inline-block;
+            position: relative;
+        }
+
+        .cerceve {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 40px;
+            height: 40px;
+            border: 3px solid red;
+            border-radius: 50%;
+            font-family: "Noto Sans Symbols2", sans-serif;
+            font-size: 30px;
+            text-align: center;
+            line-height: 30px;
+            background-color: #fff;
+        }
+
+        .baslik {
+            font-size: 24px;
+            font-weight: bold;
+            color: white;
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .miktar {
+            font-size: 18px;
+            color: white;
+            text-align: center;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    
+    <div style="background-color:wheat" class="container">
+        <h3><strong>Kassadakı son dəyişiklik</strong></h3>
+        <div class="row">
+            @{ if (Model != null)
+                { <div class="col-md-8 my-2">
+
+                        <p><strong> Dəyişiklik haqqında:</strong>  @Model.ChangeInformation</p>
+                        <p><strong>Dəyişikliyin miqdarı:</strong> @Model.Amount Manat</p>
+                        <p><strong>Son dəyişikliyin vaxtı:</strong> @Model.LastChangeTime </p>
+                        <p><strong>İcraçı və rolu:</strong>  @Model.Executor</p>
+
+                    </div>}
+
+            }
+
+            <div class="kutu-3">
+                <div class="cerceve">₼</div>
+                <div class="baslik">Kassa</div>
+                <div class="cash-register miktar"> </div>
+            </div>
+        </div>
+
+    </div>
+   
+
+
+    <div class="kutu-1">
+        <div class="cerceve">₼</div>
+        <div class="baslik">Gəlirlər</div>
+        <div class="total-count miktar"></div>
+    </div>
+    <div class="kutu-2">
+        <div class="cerceve">₼</div>
+        <div class="baslik">Xərclər</div>
+        <div class=" sum-expence miktar"></div>
+
+    </div>
+
+    
+    <div class="kutu-4">
+        <div class="cerceve">₼</div>
+        <div class="baslik">Ödənişlər</div>
+        <div class="payment-count miktar"></div>
+    </div>
+
+    <div class="kutu">
+        <div class="cerceve">₼</div>
+        <div class="baslik">Maaşlar</div>
+        <div class="salary-count miktar"> </div>
+    </div>
+</body>
+</html>
+@section Scripts{
+    <script>
+        $(function () {
+            $.ajax({
+                url: "/Salary/SendSalarySum",
+                type: "GET",
+                success: function (data) {
+
+                    $(".salary-count").text(data);
+
+                },
+                error: function () {
+                    console.log("Xeta!");
+                }
+            });
+        });
+    </script>
+    <script>
+        $(function () {
+            $.ajax({
+                url: "/Payments/SendPaymentsSum",
+                type: "GET",
+                success: function (data) {
+
+                    $(".payment-count").text(data);
+                },
+                error: function () {
+                    console.log("Xeta!");
+                }
+            });
+        });
+    </script>
+    <script>
+        $(function () {
+            var SumIncome = 0;
+            var SumPayments = 0;
+            $.ajax({
+                url: "/Income/GetSumIncomes",
+                type: "GET",
+                success: function (data) {
+                    SumIncome = data;
+                    checkTotal();
+                },
+                error: function () {
+                    console.log("Xeta!");
+                }
+            });
+            $.ajax({
+                url: "/Payments/SendPaymentsSum",
+                type: "GET",
+                success: function (data) {
+                    SumPayments = data;
+                    checkTotal();
+
+                },
+                error: function () {
+                    console.log("Xeta!");
+                }
+            });
+
+
+            function checkTotal() {
+
+
+                var total = SumPayments + SumIncome;
+                $(".total-count").text(total);
+
+            }
+        });
+    </script>
+    <script>
+        $(function () {
+            var sumExpence = 0;
+            var sumSalary = 0;
+            $.ajax({
+                url: "/Expensesies/GetSumExpence",
+                type: "GET",
+                success: function (data) {
+                    sumExpence = data;
+                    checkTotalExpecne();
+
+                },
+                error: function () {
+                    console.log("Xeta!");
+                }
+            });
+            $.ajax({
+                url: "/Salary/SendSalarySum",
+                type: "GET",
+                success: function (data) {
+                    sumSalary = data;
+                    checkTotalExpecne();
+
+                },
+                error: function () {
+                    console.log("Xeta!");
+                }
+            });
+            function checkTotalExpecne() {
+                var total = sumSalary + sumExpence;
+                $(".sum-expence").text(total)
+            }
+        });
+    </script>
+    <script>
+        $(function () {
+            $.ajax({
+                url: "/CashRegister/SendDataHome",
+                type: "GET",
+                success: function (data) {
+
+                    $(".cash-register").text(data);
+
+                },
+                error: function () {
+                    console.log("Xeta!");
+                }
+            });
+        });
+    </script>
+}

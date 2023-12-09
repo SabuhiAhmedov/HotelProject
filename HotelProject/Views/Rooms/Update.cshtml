@@ -1,0 +1,120 @@
+﻿
+
+@model Rooms
+<div class="row">
+    <div class="col-md-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <div>
+                    <h3 ><strong>Düzəliş edin</strong></h3>
+                </div>
+                <div class=" my-images my-2 d-flex flex-wrap">
+                    @if (Model.RoomsImages.Count != 1)
+                    {
+
+                        @foreach (RoomsImage roomsImage in Model.RoomsImages)
+                        {
+                            <div class="d-flex flex-column " style=" margin:7px">
+                                <img style="width:100px;height:100px; object-fit:cover" src="~/assets/img/@roomsImage.Image" />
+                                <a class="btn btn-danger rounded-pill dell-images" style="margin-top:5px ">Delete</a>
+                                <input type="hidden" value="@roomsImage.Id" />
+                            </div>
+                        }
+                    }
+                    else
+                    {
+
+                        @foreach (RoomsImage roomsImage in Model.RoomsImages)
+                        {
+                            <div class="d-flex flex-column " style=" margin:7px">
+                                <img style="width:100px;height:100px; object-fit:cover" src="~/assets/img/@roomsImage.Image" />
+
+                            </div>
+                        }
+                    }
+                </div>
+
+                <form class="forms-sample" method="post" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label asp-for="Photos">Şəkil</label>
+                        <input asp-for="Photos" class="form-control" placeholder="Tittle">
+                        <span asp-validation-for="Photos" class="text-danger"></span>
+                    </div>
+
+                    <div class=" form-group">
+                        <label>Otaq növü seçin</label> @*Bootstrapdan Select kodu gotrudum form olaraq*@
+                        <select name="typeid" class="form-control">
+                            @foreach (RoomType type in ViewBag.RoomType)
+                            {
+                                <option value="@type.Id"> @type.Type</option>
+                            }
+                        </select>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label asp-for="RoomNumber">Nömrə</label>
+                        <input asp-for="RoomNumber" class="form-control">
+                        <span asp-validation-for="RoomNumber" class="text-danger"></span>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label asp-for="Capacity">Tutum/Persons</label>
+                        <input asp-for="Capacity" class="form-control">
+                        <span asp-validation-for="Capacity" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Rent">Qiymət/Azn</label>
+                        <input asp-for="Rent" class="form-control">
+                        <span asp-validation-for="Rent" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Phone">Telefon</label>
+                        <input asp-for="Phone" class="form-control">
+                        <span asp-validation-for="Phone" class="text-danger"></span>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary mr-2 rounded-pill">Dəyiş</button>
+                    <a asp-action="Index" class="btn btn-light rounded-pill">Geri</a>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        $(".dell-images").length
+        $(document).on("click", ".dell-images", function () {
+            let clickedButton = $(this)
+            $.ajax({
+                url: "/Rooms/DeleteRoomsImage",
+                type: "get",
+                data: {
+                    "imgId": clickedButton.next().val(),
+                    "count": $(".dell-images").length
+                },
+                success: function (response) {
+                    if (response != "error") {
+                        clickedButton.parent().remove()
+                        if ($(".dell-images").length == 1) {
+                            $(".dell-images").remove()
+                        }
+                    }
+                    clickedButton.parent().remove()
+                    if ($(".dell-images").length == 1) {
+                        $(".dell-images").remove()
+                    }
+                }
+            })
+        })
+    </script>
+}
+
+
+

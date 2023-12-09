@@ -1,0 +1,84 @@
+﻿
+@model Staffs
+<div class="row">
+    <div class="col-md-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <div>
+                    <h3><strong>Redaktə edin</strong></h3>
+                </div>
+
+                <form class="forms-sample" method="post" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label asp-for="Photo">Şəkil</label>
+                        <input asp-for="Photo" class="form-control" placeholder="Tittle">
+                        <span asp-validation-for="Photo" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="FullName">Tam Ad</label>
+                        <input asp-for="FullName" class="form-control">
+                        <span asp-validation-for="FullName" class="text-danger"></span>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label asp-for="Email">Email</label>
+                        <input asp-for="Email" class="form-control">
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label asp-for="Salary">Maaş</label>
+                        <input asp-for="Salary" class="form-control">
+                        <span asp-validation-for="Salary" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Number">Nömrə</label>
+                        <input asp-for="Number" class="form-control">
+                        <span asp-validation-for="Number" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Adress">Ünvan</label>
+                        <input asp-for="Adress" class="form-control">
+                        <span asp-validation-for="Adress" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="JoinDate">Qoşulma Vaxtı</label>
+                        <input asp-for="JoinDate" class="form-control">
+                        <span asp-validation-for="JoinDate" class="text-danger"></span>
+                    </div>
+
+                    <div class=" form-group">
+                        <label>Vezife Secin</label> @*Bootstrapdan Select kodu gotrudum form olaraq*@
+                    <select name="posid" class="form-control">
+                        @foreach (Positions positions in ViewBag.Positions)
+                        {
+                            if (positions.Id == Model.PositionnId)
+                            {
+                                <option selected value="@positions.Id"> @positions.Name</option>
+                            }
+                            else
+                            {
+                                <option value="@positions.Id"> @positions.Name</option>
+                            }
+                        }
+                    </select>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary mr-2 rounded-pill">Təstiqlə</button>
+                    <a asp-action="Index" class="btn btn-light rounded-pill">Geri</a>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+}
+
+

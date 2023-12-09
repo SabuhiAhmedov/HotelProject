@@ -1,0 +1,20 @@
+﻿@model Guests
+<div class="container">
+    <h2><strong>Detallar</strong></h2>
+    <div class="row">
+
+        <div class="col-md-8 my-2">
+            <h3>@Model.FullName</h3>
+            <p><strong>Qonaq Sayı:</strong>  @Model.Quantity nəfər</p>
+            <p><strong>Vəsiqə №:</strong> @Model.PasspNumb </p>
+            <p><strong>Otağın növü:</strong>  @Model.Rooms.RoomType.Type</p>
+            <p><strong>Otağın nömrəsi:</strong> @Model.Rooms.RoomNumber </p>
+            <p><strong>Ödəniş/Otağın qiyməti:</strong>  @Model.Rooms.Rent Manat/Gün </p>
+            <p><strong>Qonağın Emaili:</strong>  @Model.Email </p>
+            <p><strong>Rezerv vaxtı:</strong>  @Model.EntryDate </p>
+            <p><strong>Bitmə vaxtı:</strong>  @Model.DepartDate </p>
+        </div>
+    </div>
+
+</div>
+<a asp-action="Index" class="btn btn-info rounded-pill my-5 mx-2" style="font-size:1.4em">Geri</a>

@@ -1,0 +1,145 @@
+﻿
+@model List<Rooms>
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+
+
+
+            <div class="col-md-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="card-title font-weight-bold mx-5  ">Otaqlar</h3>
+                        <div class="d-flex justify-content-end mx-3">
+                            <a asp-action="Create" asp-controller="Guests" class="btn btn-primary text-white rounded-pill mx-2" style="height:35px;">Qonaq əlavə et </a>
+                            <a asp-action="Create" asp-controller="Reservation" class="  btn btn-success  text-white rounded-pill" style="height:35px; width:88px">Rezerv et </a>
+                            <a asp-action="Create" class="btn btn-dark text-white rounded-pill mx-2" style="height:35px;">Otaq yarat </a>
+                        </div>
+
+
+
+
+
+                        <div class="card-body">
+
+                            <table class="table table-bordered  my-0">
+                                <thead>
+                                    <tr>
+
+                                        <th>Foto</th>
+                                        <th>Növ</th>
+                                        <th>Nömrə </th>
+
+                                        <th> Qiymət/Manat</th>
+                                        <th>Rezerv tarixləri</th>
+                                        <th> Dolu/Boş</th>
+                                        <th> Status</th>
+
+
+                                        <th> Əməliyyatlar</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (Rooms item in Model)
+                                    {
+                                        <tr>
+
+                                            <td>
+                                                <img style="width:120px; height:70px;object-fit:cover" src="~/assets/img/@item.RoomsImages.FirstOrDefault().Image" />
+
+                                            </td>
+                                            <td>@item.RoomType.Type</td>
+                                            <td>@item.RoomNumber</td>
+
+                                            <td>@item.Rent</td>
+                                            <td>
+                                                <a asp-action="Index" asp-controller="Calendar" asp-route-id="@item.Id" class="btn btn-block">
+                                                    <i style="font-size:30px" class="fas fa-calendar-week "></i>
+                                                </a>
+                                            </td>
+                                            <td>
+
+
+
+                                                @if (item.IsBusy)
+                                                {
+                                                    <span class="text-black"> Doludur</span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="text-primary"> Boşdur</span>
+                                                }
+                                            </td>
+                                            <td>
+
+
+                                                @if (item.IsDeactive)
+                                                {
+                                                    <span class="text-danger"> Qapalıdır</span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="text-success"> Açıqdır</span>
+                                                }
+                                            </td>
+
+                                            <td class="d-flex flex-row " style=" ">
+
+                                                <a asp-action="Detail" asp-route-id="@item.Id" class="btn btn-primary text-white rounded-pill mx-2">Detallar </a>
+                                                <a asp-action="Update" asp-route-id="@item.Id" class="btn btn-warning text-white rounded-pill mx-2">Düzəliş</a>
+                                                @if (item.IsDeactive)
+                                                {
+                                                    <a asp-action="Activity" asp-route-id="@item.Id" class="btn btn-success text-white rounded-pill">Açıq</a>
+                                                }
+                                                else
+                                                {
+                                                    <a asp-action="Activity" asp-route-id="@item.Id" class="btn btn-danger text-white rounded-pill">Qapalı</a>
+                                                }
+
+                                            </td>
+                                        </tr>
+                                    }
+
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+            @*Paginations*@
+            <div class="col-12 d-flex justify-content-center">
+                <div class="card">
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination">
+
+                            @for (int count = 1; count <= ViewBag.PageCount; count++)
+                            {
+                                if (ViewBag.CurrentPage == count)
+                                {
+                                    <li class="page-item disabled"><a style="color:red !important" class="page-link" asp-route-page="@count">@count</a></li>
+                                }
+                                else
+                                {
+                                    <li class="page-item"><a class="page-link" asp-route-page="@count">@count</a></li>
+                                }
+
+                            }
+
+
+
+                        </ul>
+                    </nav>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+
+}

@@ -1,0 +1,109 @@
+﻿@model List<Guests>
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+
+
+
+            <div class="col-md-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between mx-3">
+                            <h3 class="card-title font-weight-bold  ">Qonaqlar</h3>
+                            <a class="btn btn-info rounded-pill" asp-action="SendMailEveryone" asp-controller="Guests">Toplu Mail</a>
+
+                        </div>
+
+
+
+
+
+                        <div class="card-body">
+                            <div>
+                                <table class="table table-bordered  my-0">
+                                    <thead>
+                                        <tr>
+
+
+                                            <th>Tam Ad</th>
+
+                                            <th>Otaq </th>
+                                            <th>Otaq №</th>
+
+                                            <th>Email</th>
+                                            <th>Rezerv Vaxtı </th>
+                                            <th>Bitiş Vaxtı </th>
+                                            <th>İcraçı və rolu</th>
+                                            <th>Əməliyyatlar</th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (Guests item in Model)
+                                        {
+                                            <tr>
+
+
+                                                <td>@item.FullName</td>
+
+                                                <td>@item.Rooms.RoomType.Type</td>
+                                                <td>@item.Rooms.RoomNumber</td>
+
+                                                <td>@item.Email</td>
+
+                                                <td>@item.EntryDate</td>
+                                                <td>@item.DepartDate</td>
+                                                <td>@item.Executor</td>
+
+
+                                                <td class="d-flex flex-row justify-content-end">
+                                                    <a asp-action="SendMail" asp-route-id="@item.Id" class="btn btn-dark text-white rounded-pill">Mail</a>
+                                                    <a asp-action="Detail" asp-route-id="@item.Id" class="btn btn-primary text-white rounded-pill mx-1">Detallar  </a>
+                                                    <a asp-action="Update" asp-route-id="@item.Id" class="btn btn-warning text-white rounded-pill mx-1">Düzəliş</a>
+                                                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger text-white rounded-pill mx-1">Sil</a>
+
+                                                </td>
+                                            </tr>
+                                        }
+
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+            @*Paginations*@
+            <div class="col-12 d-flex justify-content-center">
+                <div class="card">
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination">
+
+                            @for (int count = 1; count <= ViewBag.PageCount; count++)
+                            {
+                                if (ViewBag.CurrentPage == count)
+                                {
+                                    <li class="page-item disabled"><a style="color:red !important" class="page-link" asp-route-page="@count">@count</a></li>
+                                }
+                                else
+                                {
+                                    <li class="page-item"><a class="page-link" asp-route-page="@count">@count</a></li>
+                                }
+
+                            }
+
+
+
+                        </ul>
+                    </nav>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+

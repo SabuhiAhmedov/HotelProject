@@ -1,0 +1,43 @@
+﻿@model Staffs
+<div class="container">
+    <h3><strong>Detallar</strong></h3>
+    <div class="row">
+        <div class="col-md-4">
+            <div id="staff-photos" class="carousel slide" data-ride="carousel">
+                <div class="carousel-inner">
+                   
+                    
+                        <div class="carousel-item active">
+                            <img src="~/assets/img/@Model.Image" alt="Photo" class="d-block w-100" style="width: 300px; height: 300px;">
+                        </div>
+                   
+                </div>
+               
+            </div>
+           
+        </div>
+        <div class="col-md-8">
+            <h3>@Model.FullName</h3>
+            <p><strong>Vəzifə:</strong>  @Model.Positionn.Name</p>
+            <p><strong>Başlama vaxtı:</strong>  @Model.JoinDate</p>
+            <p><strong>İşçinin Emaili:</strong>  @Model.Email</p>
+            <p><strong>Maaş:</strong>  @Model.Salary Manat </p>
+            <p><strong>Əlaqə Nömrəsi:</strong>  @Model.Number</p>
+            <p><strong>Ünvan:</strong>  @Model.Adress</p>
+        </div>
+    </div>
+
+</div>
+<a asp-action="Index" class="btn btn-info rounded-pill my-5 mx-5" style="font-size:1.4em">Geri</a>
+<script>
+    function previousPhoto() {
+        $('#staff-photos').carousel('prev');
+    }
+
+    function nextPhoto() {
+        $('#staff-photos').carousel('next');
+    }
+</script>
+
+
+

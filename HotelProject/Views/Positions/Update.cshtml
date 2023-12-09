@@ -1,0 +1,51 @@
+﻿
+
+@model Positions
+<div class="row">
+    <div class="col-md-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <div>
+                    <h3><strong>Vəzifəni Yeniləyin</strong> </h3>
+                </div>
+
+                <form class="forms-sample" method="post" enctype="multipart/form-data">
+
+                    <div class="form-group">
+                        <label asp-for="Name"> Ad</label>
+                        <input asp-for="Name" class="form-control">
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+
+
+
+
+                    <div class=" form-group">
+                        <label>Departament Seçin</label> @*Bootstrapdan Select kodu gotrudum form olaraq*@
+                    <select name="depid" class="form-control">
+                        @foreach (Department department in ViewBag.Department)
+                        {
+                            if (department.Id == Model.DepartmentId)
+                            {
+                                <option selected value="@department.Id"> @department.Name</option>
+                            }
+                            else
+                            {
+                                <option value="@department.Id"> @department.Name</option>
+                            }
+                        }
+                    </select>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary mr-2 rounded-pill">Dəyiş</button>
+                    <a asp-action="Index" class="btn btn-light rounded-pill">Geri</a>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+}
+

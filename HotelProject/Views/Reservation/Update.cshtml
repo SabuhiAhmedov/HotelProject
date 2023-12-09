@@ -1,0 +1,121 @@
+﻿@model Reservation
+
+<div class="row">
+    <div class="col-md-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <div>
+                    <h3><strong>Rezervi Yeniləyin</strong></h3>
+                </div>
+
+                <form class="forms-sample" method="post" enctype="multipart/form-data">
+
+                    <div class="form-group">
+                        <label asp-for="FullName">Tam Ad</label>
+                        <input asp-for="FullName" class="form-control">
+                        <span asp-validation-for="FullName" class="text-danger"></span>
+                    </div>
+
+
+
+
+                    <div class="form-group">
+                        <label asp-for="EntryDate">Rezerv Vaxtı</label>
+                        <input asp-for="EntryDate" class="form-control">
+                        <span asp-validation-for="EntryDate" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="DepartDate">Bitiş Vaxtı</label>
+                        <input asp-for="DepartDate" class="form-control">
+                        <span asp-validation-for="DepartDate" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Email">Qonağın Emaili</label>
+                        <input asp-for="Email" class="form-control">
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Quantity">Qonaqların sayı</label>
+                        <input asp-for="Quantity" class="form-control">
+                        <span asp-validation-for="Quantity" class="text-danger"></span>
+                    </div>
+
+
+                    <div class=" form-group">
+                        <label>Otaq Seçin</label>
+                        <select name="rtype" id="rtypeid" class="form-control">
+                            @foreach (RoomType roomType in ViewBag.RoomType)
+                            {
+                                <option value="@roomType.Id"> @roomType.Type</option>
+                            }
+                        </select>
+                    </div>
+
+                    <div class=" form-group">
+                        <label>Otaq Nömrəsini Seçin</label>
+                        <select name="rnumb" id="numbid" class="form-control">
+                            @foreach (Rooms room in ViewBag.Rooms)
+                            {
+                                <option value="@room.Id"> @room.RoomNumber</option>
+                            }
+                        </select>
+                        <span asp-validation-for="Rooms.RoomNumber" class="text-danger"></span>
+                    </div>
+
+                    @if (User.IsInRole("Admin"))
+                    {
+                        string role = "Admin";
+                        <div class="form-group">
+                            <label asp-for="Executor"> İcraçı</label>
+                            <input asp-for="Executor" class="form-control" value="@User.Identity.Name , @role" readonly>
+                            <span asp-validation-for="Executor" class="text-danger"></span>
+                        </div>
+
+                    }
+                    else if (User.IsInRole("Member"))
+                    {
+                        string role = "Member";
+                        <div class="form-group">
+                            <label asp-for="Executor"> İcraçı</label>
+                            <input asp-for="Executor" class="form-control" value="@User.Identity.Name , @role" readonly>
+                            <span asp-validation-for="Executor" class="text-danger"></span>
+                        </div>
+
+                    }
+
+
+
+
+                    <button type="submit" class="btn btn-primary mr-2 rounded-pill">Dəyiş</button>
+                    <a asp-action="Index" asp-controller="Reservation" class="btn btn-light rounded-pill">Geri</a>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+
+
+    <script>
+    $(document).ready(function () {
+        $("#rtypeid").change(function () {
+            var typeId = $(this).val();
+            $.ajax({
+                url: '@Url.Action("GetRoomsByType", "Reservation")',
+                data: { typeId: typeId },
+                success: function (data) {
+                    $("#numbid").html(data);
+                }
+            });
+        });
+    });
+    </script>
+
+
+}
+

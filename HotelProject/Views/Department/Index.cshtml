@@ -1,0 +1,105 @@
+﻿@model List<Department>
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+
+
+            <!--Lazim olan-->
+            <div class="col-md-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between mx-3">
+                            <h3 class="card-title font-weight-bold  ">Departamentlər </h3>
+                            <a asp-action="Create" class="btn btn-info text-white rounded-pill"> Yeni Departament</a>
+                        </div>
+
+
+
+
+                        <!-- /.card-header -->
+                        <div class="card-body">
+
+                            <table class="table table-bordered   my-0">
+                                <thead>
+                                    <tr>
+
+                                        <th> Adı</th>
+                                        <th> Status  </th>
+                                        <th class="d-flex justify-content-lg-end align-text-bottom"> Əməliyyatlar</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (Department item in Model)
+                                    {
+                                        <tr>
+
+
+                                            <td>@item.Name</td>
+
+                                            <td>
+                                                @if (item.IsDeactive)
+                                                {
+                                                    <span class="text-danger"> Deaktivdir</span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="text-success"> Aktivdir</span>
+                                                }
+                                            </td>
+                                            <td class="d-flex justify-content-end">
+
+                                                <a asp-action="Update" asp-route-id="@item.Id" class="btn btn-warning text-white rounded-pill mx-2">Düzəliş</a>
+                                                @if (item.IsDeactive)
+                                                {
+                                                    <a asp-action="Activity" asp-route-id="@item.Id" class="btn btn-success text-white rounded-pill">Aktiv</a>
+                                                }
+                                                else
+                                                {
+                                                    <a asp-action="Activity" asp-route-id="@item.Id" class="btn btn-danger text-white rounded-pill">Deaktiv</a>
+                                                }
+                                            </td>
+                                        </tr>
+                                    }
+
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                </div>
+
+            </div>
+
+            @*Paginations*@
+            <div class="col-12 d-flex justify-content-center">
+                <div class="card">
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination">
+
+                            @for (int count = 1; count <= ViewBag.PageCount; count++)
+                            {
+                                if (ViewBag.CurrentPage == count)
+                                {
+                                    <li class="page-item disabled"><a style="color:red !important" class="page-link" asp-route-page="@count">@count</a></li>
+                                }
+                                else
+                                {
+                                    <li class="page-item"><a class="page-link" asp-route-page="@count">@count</a></li>
+                                }
+
+                            }
+
+
+
+                        </ul>
+                    </nav>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+

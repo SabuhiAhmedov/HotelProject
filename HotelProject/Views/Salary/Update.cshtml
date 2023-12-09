@@ -1,0 +1,87 @@
+﻿
+@model Salary
+<div class="row">
+    <div class="col-md-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <div>
+                    <h3> <strong>Redaktə</strong></h3>
+                </div>
+
+                <form class="forms-sample" method="post" enctype="multipart/form-data">
+
+                    <div class="form-group">
+                        <label>Qonaq seçin</label>
+                        <select id="customer-select" name="staffid" class="form-control">
+                            @foreach (Staffs staffs in ViewBag.Staffs)
+                            {
+                                <option value="@staffs.Id">@staffs.FullName</option>
+                            }
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Amount">Məbləğ</label>
+                        <input id="salary-amount" asp-for="Amount" class="form-control">
+                        <span asp-validation-for="Amount" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Time"> Tarix</label>
+                        <input asp-for="Time" class="form-control">
+                        <span asp-validation-for="Time" class="text-danger"></span>
+                    </div>
+
+                    @if (User.IsInRole("Admin"))
+                    {
+                        string role = "Admin";
+                        <div class="form-group">
+                            <label asp-for="Executor"> İcraçı</label>
+                            <input asp-for="Executor" class="form-control" value="@User.Identity.Name , @role" readonly>
+                            <span asp-validation-for="Executor" class="text-danger"></span>
+                        </div>
+
+                    }
+                    else if (User.IsInRole("Member"))
+                    {
+                        string role = "Member";
+                        <div class="form-group">
+                            <label asp-for="Executor"> İcraçı</label>
+                            <input asp-for="Executor" class="form-control" value="@User.Identity.Name , @role" readonly>
+                            <span asp-validation-for="Executor" class="text-danger"></span>
+                        </div>
+
+                    }
+
+
+
+
+
+                    <button type="submit" class="btn btn-primary mr-2 rounded-pill">Təstiqlə</button>
+                    <a asp-action="Index" class="btn btn-light rounded-pill">Geri</a>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        $(function () {
+            $('#customer-select').change(function () {
+                var customerId = $(this).val();
+                $.ajax({
+                    url: '/Salary/GetSalaryAmount',
+                    data: { customerId: customerId },
+                    success: function (data) {
+                        $('#salary-amount').val(data);
+                    }
+                });
+            });
+        });
+    </script>
+    
+
+}
+

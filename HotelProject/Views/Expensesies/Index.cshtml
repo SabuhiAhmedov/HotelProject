@@ -1,0 +1,62 @@
+﻿@model List<Expensesies>
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+
+
+
+            <div class="col-md-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between mx-3">
+                            <h3 class="card-title font-weight-bold  ">Xərclər</h3>
+                            <a asp-action="Create" class="btn btn-info text-white rounded-pill mx-2" style="height:35px;">Daxil et </a>
+                        </div>
+
+
+
+
+
+                        <div class="card-body">
+
+                            <table class="table table-bordered  my-0">
+                                <thead>
+                                    <tr>
+
+
+                                        <th>Mənbə</th>
+                                        <th>Məbləğ/Manat</th>
+                                        <th>Tarix </th>
+                                        <th>İcraçı və rolu </th>
+                                       
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (Expensesies item in Model)
+                                    {
+                                        <tr>
+
+
+                                            <td>@item.Source</td>
+                                            <td>@item.Amount</td>
+                                            <td>@item.Time</td>
+                                            <td>@item.Executor</td>
+
+
+                                          
+                                        </tr>
+                                    }
+
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+

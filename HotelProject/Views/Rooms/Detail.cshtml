@@ -1,0 +1,52 @@
+﻿@model Rooms
+<div class="container">
+    <h3><strong>Detallar</strong></h3>
+    <div class="row">
+        <div class="col-md-4">
+            <div id="staff-photos" class="carousel slide" data-ride="carousel">
+                <div class="carousel-inner">
+                    @foreach (RoomsImage image in Model.RoomsImages)
+                    {
+                    <div class="carousel-item @(image == Model.RoomsImages.First() ? "active" : "")">
+                        <img style="height:300px; width:400px " src="~/assets/img/@image.Image" />
+                    </div>
+                      
+                    }
+
+                </div>
+                <a class="carousel-control-prev" href="#staff-photos" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#staff-photos" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </div>
+            <div class="text-center mt-3">
+                <button class="btn btn-secondary mr-2" onclick="previousPhoto()">Əvvəlki</button>
+                <button class="btn btn-secondary" onclick="nextPhoto()">Sonra</button>
+            </div>
+        </div>
+        <div class="col-md-8 my-2">
+            <h2 >@Model.RoomType.Type</h2>
+            <p><strong>Otaq Nömrəsi</strong>  @Model.RoomNumber</p>
+            <p><strong>Otağın Tutumu:</strong>  @Model.Capacity Nəfər</p>
+            <p><strong>Telefon:</strong>  @Model.Phone </p>
+            <p><strong>Qiyməti:</strong>  @Model.Rent Manat/Gün</p>
+        </div>
+    </div>
+
+</div>
+ <a asp-action="Index" class="btn btn-info rounded-pill my-5 mx-5" style="font-size:1.4em">Geri</a>
+<script>
+    function previousPhoto() {
+        $('#staff-photos').carousel('prev');
+    }
+
+    function nextPhoto() {
+        $('#staff-photos').carousel('next');
+    }
+</script>
+
+
